@@ -34,14 +34,15 @@ Greenlets are lightweight coroutines for in-process concurrent programming.
 Current build status
 ====================
 
-Linux: [![Circle CI](https://circleci.com/gh/conda-forge/greenlet-feedstock.svg?style=shield)](https://circleci.com/gh/conda-forge/greenlet-feedstock)
-OSX: [![TravisCI](https://travis-ci.org/conda-forge/greenlet-feedstock.svg?branch=master)](https://travis-ci.org/conda-forge/greenlet-feedstock)
-Windows: [![AppVeyor](https://ci.appveyor.com/api/projects/status/github/conda-forge/greenlet-feedstock?svg=True)](https://ci.appveyor.com/project/conda-forge/greenlet-feedstock/branch/master)
+All platforms:
+[![noarch](https://img.shields.io/circleci/project/github/conda-forge/greenlet-feedstock/master.svg?label=noarch)](https://circleci.com/gh/conda-forge/greenlet-feedstock)
 
 Current release info
 ====================
-Version: [![Anaconda-Server Badge](https://anaconda.org/conda-forge/greenlet/badges/version.svg)](https://anaconda.org/conda-forge/greenlet)
-Downloads: [![Anaconda-Server Badge](https://anaconda.org/conda-forge/greenlet/badges/downloads.svg)](https://anaconda.org/conda-forge/greenlet)
+
+| Name | Downloads | Version | Platforms |
+| --- | --- | --- | --- |
+| [![Conda Recipe](https://img.shields.io/badge/recipe-greenlet-green.svg)](https://anaconda.org/conda-forge/greenlet) | [![Conda Downloads](https://img.shields.io/conda/dn/conda-forge/greenlet.svg)](https://anaconda.org/conda-forge/greenlet) | [![Conda Version](https://img.shields.io/conda/vn/conda-forge/greenlet.svg)](https://anaconda.org/conda-forge/greenlet) | [![Conda Platforms](https://img.shields.io/conda/pn/conda-forge/greenlet.svg)](https://anaconda.org/conda-forge/greenlet) |
 
 Installing greenlet
 ===================
