@@ -1,6 +1,6 @@
 {% set name = "greenlet" %}
-{% set version = "0.4.15" %}
-{% set sha256 = "9416443e219356e3c31f1f918a91badf2e37acf297e2fa13d24d1cc2380f8fbc" %}
+{% set version = "0.4.16" %}
+{% set sha256 = "6e06eac722676797e8fce4adb8ad3dc57a1bb3adfb0dd3fdf8306c055a38456c" %}
 
 package:
   name: {{ name|lower }}
@@ -12,8 +12,8 @@ source:
   sha256: {{ sha256 }}
 
 build:
-  number: 1
-  script: "{{ PYTHON }} -m pip install --no-deps --ignore-installed ."
+  number: 0
+  script: {{ PYTHON }} -m pip install --no-deps --ignore-installed .
 
 requirements:
   build:
@@ -35,7 +35,7 @@ about:
   license: MIT
   license_family: MIT
   license_file: LICENSE
-  summary: 'Lightweight in-process concurrent programming'
+  summary: Lightweight in-process concurrent programming
 
   description: |
     The greenlet package is a spin-off of Stackless, a version of CPython that
