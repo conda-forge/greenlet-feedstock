@@ -1,18 +1,16 @@
 {% set name = "greenlet" %}
-{% set version = "0.4.17" %}
-{% set sha256 = "41d8835c69a78de718e466dd0e6bfd4b46125f21a67c3ff6d76d8d8059868d6b" %}
+{% set version = "1.0.0" %}
 
 package:
   name: {{ name|lower }}
   version: {{ version }}
 
 source:
-  fn: {{ name }}-{{ version }}.tar.gz
   url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
-  sha256: {{ sha256 }}
+  sha256: 719e169c79255816cdcf6dccd9ed2d089a72a9f6c42273aae12d55e8d35bdcf8
 
 build:
-  number: 2
+  number: 0
   script: {{ PYTHON }} -m pip install --no-deps --ignore-installed .
 
 requirements:
@@ -20,11 +18,10 @@ requirements:
     - python                                 # [build_platform != target_platform]
     - cross-python_{{ target_platform }}     # [build_platform != target_platform]
     - {{ compiler("c") }}
-
+    - {{ compiler("cxx") }}
   host:
     - pip
     - python
-
   run:
     - python
 
@@ -67,3 +64,4 @@ extra:
   recipe-maintainers:
     - curtisalexander
     - nicoddemus
+    - xhochy
