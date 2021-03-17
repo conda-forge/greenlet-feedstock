@@ -378,4 +378,5 @@ Feedstock Maintainers
 
 * [@curtisalexander](https://github.com/curtisalexander/)
 * [@nicoddemus](https://github.com/nicoddemus/)
+* [@xhochy](https://github.com/xhochy/)
 
