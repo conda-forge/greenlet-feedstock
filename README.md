@@ -1,11 +1,11 @@
-About greenlet
-==============
+About greenlet-feedstock
+========================
+
+Feedstock license: [BSD-3-Clause](https://github.com/conda-forge/greenlet-feedstock/blob/main/LICENSE.txt)
 
 Home: https://github.com/python-greenlet/greenlet
 
 Package license: MIT
-
-Feedstock license: [BSD-3-Clause](https://github.com/conda-forge/greenlet-feedstock/blob/main/LICENSE.txt)
 
 Summary: Lightweight in-process concurrent programming
 
