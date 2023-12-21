@@ -1,5 +1,5 @@
 {% set name = "greenlet" %}
-{% set version = "3.0.2" %}
+{% set version = "3.0.3" %}
 
 package:
   name: {{ name|lower }}
@@ -7,7 +7,7 @@ package:
 
 source:
   url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
-  sha256: 1c1129bc47266d83444c85a8e990ae22688cf05fb20d7951fd2866007c2ba9bc
+  sha256: 43374442353259554ce33599da8b692d5aa96f8976d567d4badf263371fbe491
 
 build:
   number: 0
