@@ -1,0 +1,115 @@
+From 0667b8a886d7f846e44dc1e23932394bb599232a Mon Sep 17 00:00:00 2001
+From: Victor Stinner <vstinner@python.org>
+Date: Mon, 3 Jun 2024 10:55:14 +0200
+Subject: [PATCH 3/8] Support delete_later
+
+---
+ src/greenlet/TPythonState.cpp            | 14 ++++++++++++--
+ src/greenlet/greenlet.cpp                |  4 ++++
+ src/greenlet/greenlet_cpython_compat.hpp |  6 ++++++
+ src/greenlet/greenlet_greenlet.hpp       |  4 ++++
+ 4 files changed, 26 insertions(+), 2 deletions(-)
+
+diff --git a/src/greenlet/TPythonState.cpp b/src/greenlet/TPythonState.cpp
+index c0dbf70..bfb40ca 100644
+--- a/src/greenlet/TPythonState.cpp
++++ b/src/greenlet/TPythonState.cpp
+@@ -18,7 +18,11 @@ PythonState::PythonState()
+ #else
+     ,recursion_depth(0)
+ #endif
++#if GREENLET_PY313
++    ,delete_later(nullptr)
++#else
+     ,trash_delete_nesting(0)
++#endif
+ #if GREENLET_PY311
+     ,current_frame(nullptr)
+     ,datastack_chunk(nullptr)
+@@ -145,7 +149,9 @@ void PythonState::operator<<(const PyThreadState *const tstate) noexcept
+     Py_XDECREF(frame);  // PyThreadState_GetFrame gives us a new
+                         // reference.
+     this->_top_frame.steal(frame);
+-  #if GREENLET_PY312
++  #if GREENLET_PY313
++    this->delete_later = Py_XNewRef(tstate->delete_later);
++  #elif GREENLET_PY312
+     this->trash_delete_nesting = tstate->trash.delete_nesting;
+   #else // not 312
+     this->trash_delete_nesting = tstate->trash_delete_nesting;
+@@ -213,7 +219,11 @@ void PythonState::operator>>(PyThreadState *const tstate) noexcept
+     tstate->datastack_top = this->datastack_top;
+     tstate->datastack_limit = this->datastack_limit;
+     this->_top_frame.relinquish_ownership();
+-  #if GREENLET_PY312
++  #if GREENLET_PY313
++    Py_XDECREF(tstate->delete_later);
++    tstate->delete_later = this->delete_later;
++    Py_CLEAR(this->delete_later);
++  #elif GREENLET_PY312
+     tstate->trash.delete_nesting = this->trash_delete_nesting;
+   #else // not 3.12
+     tstate->trash_delete_nesting = this->trash_delete_nesting;
+diff --git a/src/greenlet/greenlet.cpp b/src/greenlet/greenlet.cpp
+index 5a9818e..dfc748a 100644
+--- a/src/greenlet/greenlet.cpp
++++ b/src/greenlet/greenlet.cpp
+@@ -1328,6 +1328,7 @@ mod_enable_optional_cleanup(PyObject* UNUSED(module), PyObject* flag)
+     Py_RETURN_NONE;
+ }
+ 
++#if !GREENLET_PY313
+ PyDoc_STRVAR(mod_get_tstate_trash_delete_nesting_doc,
+              "get_tstate_trash_delete_nesting() -> Integer\n"
+              "\n"
+@@ -1343,6 +1344,7 @@ mod_get_tstate_trash_delete_nesting(PyObject* UNUSED(module))
+     return PyLong_FromLong(tstate->trash_delete_nesting);
+ #endif
+ }
++#endif
+ 
+ static PyMethodDef GreenMethods[] = {
+     {"getcurrent",
+@@ -1356,7 +1358,9 @@ static PyMethodDef GreenMethods[] = {
+     {"get_total_main_greenlets", (PyCFunction)mod_get_total_main_greenlets, METH_NOARGS, mod_get_total_main_greenlets_doc},
+     {"get_clocks_used_doing_optional_cleanup", (PyCFunction)mod_get_clocks_used_doing_optional_cleanup, METH_NOARGS, mod_get_clocks_used_doing_optional_cleanup_doc},
+     {"enable_optional_cleanup", (PyCFunction)mod_enable_optional_cleanup, METH_O, mod_enable_optional_cleanup_doc},
++#if !GREENLET_PY313
+     {"get_tstate_trash_delete_nesting", (PyCFunction)mod_get_tstate_trash_delete_nesting, METH_NOARGS, mod_get_tstate_trash_delete_nesting_doc},
++#endif
+     {NULL, NULL} /* Sentinel */
+ };
+ 
+diff --git a/src/greenlet/greenlet_cpython_compat.hpp b/src/greenlet/greenlet_cpython_compat.hpp
+index c0fb94c..ce5fd88 100644
+--- a/src/greenlet/greenlet_cpython_compat.hpp
++++ b/src/greenlet/greenlet_cpython_compat.hpp
+@@ -55,6 +55,12 @@ https://bugs.python.org/issue46090). Summary of breaking internal changes:
+ #    define GREENLET_PY312 0
+ #endif
+ 
++#if PY_VERSION_HEX >= 0x30D0000
++#    define GREENLET_PY313 1
++#else
++#    define GREENLET_PY313 0
++#endif
++
+ #ifndef Py_SET_REFCNT
+ /* Py_REFCNT and Py_SIZE macros are converted to functions
+ https://bugs.python.org/issue39573 */
+diff --git a/src/greenlet/greenlet_greenlet.hpp b/src/greenlet/greenlet_greenlet.hpp
+index 6da6841..fbfdfbf 100644
+--- a/src/greenlet/greenlet_greenlet.hpp
++++ b/src/greenlet/greenlet_greenlet.hpp
+@@ -111,7 +111,11 @@ namespace greenlet
+ #else
+         int recursion_depth;
+ #endif
++#if GREENLET_PY313
++        PyObject *delete_later;
++#else
+         int trash_delete_nesting;
++#endif
+ #if GREENLET_PY311
+         _PyInterpreterFrame* current_frame;
+         _PyStackChunk* datastack_chunk;

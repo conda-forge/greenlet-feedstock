@@ -1,0 +1,32 @@
+From 83b8373deb16b52bdd794976080fbc275ceeaf71 Mon Sep 17 00:00:00 2001
+From: Jason Madden <jamadden@gmail.com>
+Date: Wed, 4 Sep 2024 12:27:01 -0500
+Subject: [PATCH 7/8] D'oh, removed one too many.
+
+---
+ src/greenlet/tests/test_greenlet_trash.py | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
+
+diff --git a/src/greenlet/tests/test_greenlet_trash.py b/src/greenlet/tests/test_greenlet_trash.py
+index a3f58b7..c734b98 100644
+--- a/src/greenlet/tests/test_greenlet_trash.py
++++ b/src/greenlet/tests/test_greenlet_trash.py
+@@ -34,7 +34,8 @@ class TestTrashCanReEnter(unittest.TestCase):
+ 
+     def test_it(self):
+         try:
+-            from greenlet._greenlet import get_tstate_trash_delete_nesting
++            # pylint:disable-next=no-name-in-module
++            from greenlet._greenlet import get_tstate_trash_delete_nesting 
+         except ImportError:
+             import sys
+             # Python 3.13 has not "trash delete nesting" anymore (but "delete later")
+@@ -47,7 +48,7 @@ class TestTrashCanReEnter(unittest.TestCase):
+ 
+     def check_it(self): # pylint:disable=too-many-statements
+         import greenlet
+-
++        from greenlet._greenlet import get_tstate_trash_delete_nesting # pylint:disable=no-name-in-module
+         main = greenlet.getcurrent()
+ 
+         assert get_tstate_trash_delete_nesting() == 0

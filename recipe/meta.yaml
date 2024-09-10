@@ -8,6 +8,17 @@ package:
 source:
   url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
   sha256: 43374442353259554ce33599da8b692d5aa96f8976d567d4badf263371fbe491
+  patches:
+    # See https://github.com/python-greenlet/greenlet/pull/396
+    # Remove this with the next release.
+    - 0001-Fix-392-Port-to-Python-3.13.patch
+    - 0002-Add-Python-3.13-CI-to-GitHub-Actions.patch
+    - 0003-Support-delete_later.patch
+    - 0004-Fix-current_frame.patch
+    - 0005-Update-tests.patch
+    - 0006-Update-test_greenlet_trash.py-to-avoid-redefining-va.patch
+    - 0007-D-oh-removed-one-too-many.patch
+    - 0008-Trailing-whitespace-makes-the-linter-mad.-Thanks-Git.patch
 
 build:
   number: 1

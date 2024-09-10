@@ -1,0 +1,29 @@
+From df68f20487507d45cd8e7f32422f9670b5ae2b5a Mon Sep 17 00:00:00 2001
+From: Jason Madden <jamadden@gmail.com>
+Date: Wed, 4 Sep 2024 12:42:19 -0500
+Subject: [PATCH 8/8] Trailing whitespace makes the linter mad. Thanks GitHub
+ web editor.
+
+---
+ src/greenlet/tests/test_greenlet_trash.py | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/src/greenlet/tests/test_greenlet_trash.py b/src/greenlet/tests/test_greenlet_trash.py
+index c734b98..c1fc137 100644
+--- a/src/greenlet/tests/test_greenlet_trash.py
++++ b/src/greenlet/tests/test_greenlet_trash.py
+@@ -35,12 +35,13 @@ class TestTrashCanReEnter(unittest.TestCase):
+     def test_it(self):
+         try:
+             # pylint:disable-next=no-name-in-module
+-            from greenlet._greenlet import get_tstate_trash_delete_nesting 
++            from greenlet._greenlet import get_tstate_trash_delete_nesting # pylint:disable=unused-import
+         except ImportError:
+             import sys
+             # Python 3.13 has not "trash delete nesting" anymore (but "delete later")
+             assert sys.version_info[:2] >= (3, 13)
+             self.skipTest("get_tstate_trash_delete_nesting is not available.")
++
+         # Try several times to trigger it, because it isn't 100%
+         # reliable.
+         for _ in range(10):
