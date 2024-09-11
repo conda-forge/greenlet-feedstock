@@ -21,8 +21,9 @@ requirements:
     - {{ stdlib("c") }}
     - {{ compiler("cxx") }}
   host:
-    - pip
+    - pip    
     - python
+    - setuptools
   run:
     - python
 
