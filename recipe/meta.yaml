@@ -10,7 +10,7 @@ source:
   sha256: b395121e9bbe8d02a750886f108d540abe66075e61e22f7353d9acb0b81be0f0
 
 build:
-  number: 0
+  number: 1
   script: {{ PYTHON }} -m pip install --no-deps --ignore-installed .
 
 requirements:
@@ -21,8 +21,9 @@ requirements:
     - {{ stdlib("c") }}
     - {{ compiler("cxx") }}
   host:
-    - pip
+    - pip    
     - python
+    - setuptools
   run:
     - python
 
