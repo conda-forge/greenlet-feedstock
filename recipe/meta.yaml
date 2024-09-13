@@ -1,5 +1,6 @@
 {% set name = "greenlet" %}
 {% set version = "3.1.0" %}
+# Consider removing the patch below when 3.1.1 release (#44).
 
 package:
   name: {{ name|lower }}
@@ -9,7 +10,7 @@ source:
   url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
   sha256: b395121e9bbe8d02a750886f108d540abe66075e61e22f7353d9acb0b81be0f0
   patches:
-    # python-greenlet/greenlet#426 remove with 3.1.1 release
+    # python-greenlet/greenlet#426 remove with 3.1.1 release (#44).
     - gh426_logmsg.patch
 
 build:
