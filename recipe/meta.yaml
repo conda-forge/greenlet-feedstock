@@ -1,6 +1,5 @@
 {% set name = "greenlet" %}
-{% set version = "3.1.0" %}
-# Consider removing the patch below when 3.1.1 release (#44).
+{% set version = "3.1.1" %}
 
 package:
   name: {{ name|lower }}
@@ -8,13 +7,10 @@ package:
 
 source:
   url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
-  sha256: b395121e9bbe8d02a750886f108d540abe66075e61e22f7353d9acb0b81be0f0
-  patches:
-    # python-greenlet/greenlet#426 remove with 3.1.1 release (#44).
-    - gh426_logmsg.patch
+  sha256: 4ce3ac6cdb6adf7946475d7ef31777c26d94bccc377e070a7986bd2d5c515467
 
 build:
-  number: 2
+  number: 0
   script: {{ PYTHON }} -m pip install --no-deps --ignore-installed .
 
 requirements:
@@ -25,7 +21,7 @@ requirements:
     - {{ stdlib("c") }}
     - {{ compiler("cxx") }}
   host:
-    - pip    
+    - pip
     - python
     - setuptools
   run:
