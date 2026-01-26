@@ -1,25 +1,30 @@
-{% set name = "greenlet" %}
-{% set version = "3.3.1" %}
+schema_version: 1
+
+context:
+  name: greenlet
+  version: 3.3.1
 
 package:
-  name: {{ name|lower }}
-  version: {{ version }}
+  name: ${{ name|lower }}
+  version: ${{ version }}
 
 source:
-  url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  url: https://pypi.org/packages/source/${{ name[0] }}/${{ name }}/${{ name }}-${{ version }}.tar.gz
   sha256: 41848f3230b58c08bb43dee542e74a2a2e34d3c59dc3076cec9151aeeedcae98
 
 build:
   number: 1
-  script: {{ PYTHON }} -m pip install --no-deps --ignore-installed -vvv .
+  script: ${{ PYTHON }} -m pip install --no-deps --ignore-installed -vvv .
 
 requirements:
   build:
-    - python                                 # [build_platform != target_platform]
-    - cross-python_{{ target_platform }}     # [build_platform != target_platform]
-    - {{ compiler("c") }}
-    - {{ stdlib("c") }}
-    - {{ compiler("cxx") }}
+    - if: build_platform != target_platform
+      then:
+        - python
+        - cross-python_${{ target_platform }}
+    - ${{ compiler("c") }}
+    - ${{ stdlib("c") }}
+    - ${{ compiler("cxx") }}
   host:
     - pip
     - python
@@ -27,21 +32,15 @@ requirements:
   run:
     - python
 
-test:
-  requires:
-    - pip
-  commands:
-    - pip check
-  imports:
-    - greenlet
+tests:
+  - python:
+      imports:
+        - greenlet
 
 about:
-  home: https://github.com/python-greenlet/greenlet
   license: MIT
-  license_family: MIT
   license_file: LICENSE
   summary: Lightweight in-process concurrent programming
-
   description: |
     The greenlet package is a spin-off of Stackless, a version of CPython that
     supports micro-threads called "tasklets". Tasklets run pseudo-concurrently
@@ -63,8 +62,9 @@ about:
     interpreter.
 
     Greenlets are lightweight coroutines for in-process concurrent programming.
-  doc_url: https://greenlet.readthedocs.io
-  dev_url: https://github.com/python-greenlet/greenlet
+  homepage: https://github.com/python-greenlet/greenlet
+  repository: https://github.com/python-greenlet/greenlet
+  documentation: https://greenlet.readthedocs.io
 
 extra:
   recipe-maintainers:
