@@ -11,7 +11,7 @@ Summary: Lightweight in-process concurrent programming
 
 Development: https://github.com/python-greenlet/greenlet
 
-Documentation: https://greenlet.readthedocs.io
+Documentation: https://greenlet.readthedocs.io/
 
 The greenlet package is a spin-off of Stackless, a version of CPython that
 supports micro-threads called "tasklets". Tasklets run pseudo-concurrently
@@ -33,7 +33,6 @@ Greenlets are provided as a C extension module for the regular unmodified
 interpreter.
 
 Greenlets are lightweight coroutines for in-process concurrent programming.
-
 
 Current build status
 ====================
