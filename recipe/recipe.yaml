@@ -2,7 +2,7 @@ schema_version: 1
 
 context:
   name: greenlet
-  version: "3.5.0"
+  version: "3.5.1"
 
 package:
   name: ${{ name|lower }}
@@ -10,7 +10,7 @@ package:
 
 source:
   url: https://pypi.org/packages/source/${{ name[0] }}/${{ name }}/${{ name }}-${{ version }}.tar.gz
-  sha256: d419647372241bc68e957bf38d5c1f98852155e4146bd1e4121adea81f4f01e4
+  sha256: 5a56aeb7d5d9cc4b3a735efb5095bd4b4f6f0e4f93e5ca876d0e2315137b7829
 
 build:
   number: 0
